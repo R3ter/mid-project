@@ -1,6 +1,6 @@
-import "style.scss";
+import "./style.scss";
 
 interface IProps {}
 export default ({}: IProps) => {
-  return <div></div>;
+  return <div>main</div>
 };
