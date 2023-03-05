@@ -1,10 +1,15 @@
 @import "./../../Root";
 .Header {
+  position: fixed;
+  left: 0;
+  height: 100px;
+  top: 0;
   background-color: $mainColor;
   width: 100%;
   display: flex;
   justify-content: center;
   div {
+    align-self: center;
     margin: 10px;
   }
 }

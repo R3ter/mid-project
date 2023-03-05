@@ -1,5 +1,13 @@
-$mainColor: rgb(17, 153, 153);
-
+$mainColor: rgba(21, 124, 124, 0.527);
+$FontColor: white;
+$BackgroundColor: rgb(77, 34, 44);
 body {
   margin: 0;
+  color: $FontColor;
+  background-color: $BackgroundColor;
+}
+* {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
