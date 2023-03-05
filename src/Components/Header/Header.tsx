@@ -1,21 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Logo from "../Logo/Logo";
+import NavBar from "../NavBar/NavBar";
 import "./style.scss";
 
 interface IProps {}
 export default ({}: IProps) => {
   return (
     <div>
-      <div className="Header">
-        <div>
-          <Logo />
-        </div>
-        <div>
-          <div>Services</div>
-          <div>About Us</div>
-          <div>Booking</div>
-        </div>
-      </div>
+      <NavBar />
+      <br></br>
       <Outlet />
     </div>
   );

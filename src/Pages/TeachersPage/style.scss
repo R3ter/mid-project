@@ -1,0 +1,8 @@
+.Teachers {
+  margin: 100px;
+  color: black;
+
+  & > p {
+    font-size: 40px;
+  }
+}

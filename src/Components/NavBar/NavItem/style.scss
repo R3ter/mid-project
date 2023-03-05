@@ -1,0 +1,10 @@
+.NavItem {
+  margin-top: 0;
+  & :first-child {
+    margin-top: 0;
+    font-size: 13px;
+    margin-left: 0.5vw;
+    color: rgb(234, 245, 232);
+    padding: 15px;
+  }
+}

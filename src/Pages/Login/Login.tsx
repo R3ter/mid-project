@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MainButton from "../../Components/MainButton/MainButton";
 
 function Copyright(props: any) {
   return (
@@ -22,10 +23,7 @@ function Copyright(props: any) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link color="inherit">Waleed</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -53,7 +51,8 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage:
+              "url(https://api.time.com/wp-content/uploads/2021/10/GettyImages-577674005.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -73,12 +72,11 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <p style={{ fontSize: "40px" }}>Sign in</p>
+            <p style={{ fontSize: "20px", color: "gray" }}>
+              Book lessons with qualified teachers online in various subjects
+              with convenient communication tools.
+            </p>
             <Box
               component="form"
               noValidate
@@ -109,26 +107,12 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
+              <MainButton text="Login" />
+
+              <Link href="#" style={{ marginTop: "100px" }}>
+                <MainButton type="Secondary" text="Register" />
+              </Link>
+
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

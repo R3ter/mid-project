@@ -7,7 +7,6 @@ export default ({}: IProps) => {
   return (
     <div>
       <HeroSection />
-      <ParentLoading />
     </div>
   );
 };
