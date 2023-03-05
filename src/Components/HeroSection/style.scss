@@ -5,6 +5,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  :first-child {
+    font-size: 50px;
+  }
   div {
     align-self: center;
   }
