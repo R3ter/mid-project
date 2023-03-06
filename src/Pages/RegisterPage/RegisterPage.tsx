@@ -6,43 +6,27 @@ import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MainButton from "../../Components/MainButton/MainButton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Copyright from "../../Components/Copyright/Copyright";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
-import { login } from "../../functions/Login";
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const navigate = useNavigate();
-  const errorMessFn = React.useRef((bool: boolean) => {});
-  const errorIncorrect = React.useRef((bool: boolean) => {});
+export default () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if (!data.get("email") || !data.get("password")) {
-      errorMessFn.current(true);
-    } else {
-      if (login(data.get("email"), data.get("password"))) {
-        navigate("/");
-      } else {
-        errorMessFn.current(true);
-      }
-    }
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <SystemMessage
-        text="Email and password cant be empty"
-        setMessRef={errorMessFn}
-      />
-      <SystemMessage
-        text="Email and password is incorrect"
-        setMessRef={errorIncorrect}
-      />
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -87,6 +71,15 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
+                id="name"
+                label="Full name"
+                name="name"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
@@ -103,14 +96,24 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="repassword"
+                label="confirm password"
+                type="password"
+                id="repassword"
+              />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <MainButton text="Login" />
-
-              <Link to="/register" style={{ marginTop: "100px" }}>
+              <Link to={"#"} style={{ marginTop: "100px" }}>
                 <MainButton type="Secondary" text="Register" />
+              </Link>
+              <Link to="/login" style={{ marginTop: "100px" }}>
+                already have an account sign in?
               </Link>
               <Copyright sx={{ mt: 5 }} />
             </Box>
@@ -119,4 +122,4 @@ export default function SignInSide() {
       </Grid>
     </ThemeProvider>
   );
-}
+};

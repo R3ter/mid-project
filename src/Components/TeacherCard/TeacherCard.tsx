@@ -15,8 +15,11 @@ interface IProps {
   name: string;
   description: string;
   rating: number;
+  id: string;
+  avatar: string;
 }
-export default ({ country, description, name, rating }: IProps) => {
+export default ({ country, description, name, rating, avatar, id }: IProps) => {
+  console.log(avatar);
   return (
     <Card sx={{ maxWidth: 345, margin: 5 }}>
       <CardHeader
@@ -36,7 +39,7 @@ export default ({ country, description, name, rating }: IProps) => {
       <CardMedia
         component="img"
         height="150"
-        image="https://camblyavatars.s3.amazonaws.com/6314515d9a6801f21bb1b895s200?h=895456731133e9d01cdea9031308f9a0"
+        image={avatar}
         alt="Paella dish"
         sx={{
           marginBottom: "1rem",
@@ -52,7 +55,7 @@ export default ({ country, description, name, rating }: IProps) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <Link to={"/Book/1"}>
+          <Link to={"/Book/" + id}>
             <CalendarMonthIcon />
           </Link>
         </IconButton>

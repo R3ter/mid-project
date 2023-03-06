@@ -1,0 +1,12 @@
+.ChatContact {
+  display: flex;
+  justify-content: left;
+  cursor: pointer;
+  background-color: rgb(70, 105, 138);
+
+  &:hover {
+    background-color: rgb(60, 96, 129);
+  }
+
+  padding-left: 20px;
+}

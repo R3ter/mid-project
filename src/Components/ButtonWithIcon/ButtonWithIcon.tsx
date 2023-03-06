@@ -7,7 +7,7 @@ interface IProps {
 export default ({ text, Icon, onClick = () => {} }: IProps) => {
   if (text == "") {
     return (
-      <IconButton onClick={() => onClick()} size="large" color="inherit">
+      <IconButton onClick={(e) => onClick(e)} size="large" color="inherit">
         <Badge badgeContent={0} color="error">
           <Icon />
         </Badge>
@@ -19,7 +19,7 @@ export default ({ text, Icon, onClick = () => {} }: IProps) => {
       style={{ color: "white", border: "none" }}
       variant="outlined"
       endIcon={
-        <IconButton onClick={() => onClick()} size="large" color="inherit">
+        <IconButton onClick={(e) => onClick(e)} size="large" color="inherit">
           <Badge badgeContent={0} color="error">
             <Icon />
           </Badge>

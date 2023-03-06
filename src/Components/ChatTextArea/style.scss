@@ -1,0 +1,17 @@
+.ChatTexArea {
+  width: 100%;
+  border-radius: 10px;
+  input {
+    padding: 10px;
+    padding-right: 50px;
+    width: 75%;
+  }
+  display: flex;
+  & > * {
+    margin: auto;
+  }
+  & > div {
+    color: black;
+    margin-left: -15%;
+  }
+}

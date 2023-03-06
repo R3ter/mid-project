@@ -4,10 +4,21 @@ interface IProps {
   text: string;
   type?: "Default" | "Secondary";
   Icon?: React.ElementType;
+  onclick?(): void;
 }
-export default ({ text, type = "Default", Icon }: IProps) => {
+export default ({
+  text,
+  type = "Default",
+  Icon,
+  onclick = () => {},
+}: IProps) => {
   return (
-    <div className="ButtonParent">
+    <div
+      onClick={() => {
+        onclick();
+      }}
+      className="ButtonParent"
+    >
       <button
         className={type == "Default" ? "MainButton" : "MainButtonSecondary"}
       >
