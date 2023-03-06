@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Rating } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface IProps {
   country: string;
@@ -17,7 +18,7 @@ interface IProps {
 }
 export default ({ country, description, name, rating }: IProps) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, margin: 5 }}>
       <CardHeader
         title={name}
         subheader={country}
@@ -51,7 +52,9 @@ export default ({ country, description, name, rating }: IProps) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <CalendarMonthIcon />
+          <Link to={"/Book/1"}>
+            <CalendarMonthIcon />
+          </Link>
         </IconButton>
         <IconButton aria-label="share">
           <EmailIcon />

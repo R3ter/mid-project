@@ -24,8 +24,8 @@ export default function PrimarySearchAppBar() {
               width: "40%",
             }}
           >
-            <NavItem>Teachers</NavItem>
-            <NavItem>Calender</NavItem>
+            <NavItem link="tutors">Teachers</NavItem>
+            <NavItem link="Calender">Calender</NavItem>
           </div>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

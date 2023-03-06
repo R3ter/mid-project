@@ -4,6 +4,7 @@ import "./Root.scss";
 import HomePage from "./Pages/HomePage/HomePage";
 import Login from "./Pages/Login/Login";
 import Teachers from "./Pages/TeachersPage/TeachersPage";
+import BookPage from "./Pages/BookPage/BookPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
       {
         path: "/tutors",
         element: <Teachers />,
+      },
+
+      {
+        path: "/book/:id",
+        element: <BookPage />,
       },
     ],
   },
