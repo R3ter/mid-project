@@ -34,7 +34,7 @@ export default ({ user }: IProps) => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1, position: "fixed", width: "100%" }}>
+    <Box sx={{ flexGrow: 1, position: "fixed", width: "100%", zIndex: 999 }}>
       <AppBar position="sticky" style={{ backgroundColor: "#7087f3" }}>
         <Toolbar>
           <Logo />

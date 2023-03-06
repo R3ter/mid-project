@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 
 interface IProps {
-  time: { from: string; to: string }[];
+  time: { 0: { from: string; to: string } };
   onSelect(arg: string): void;
 }
 export default ({ time, onSelect = () => {} }: IProps) => {
@@ -21,12 +21,12 @@ export default ({ time, onSelect = () => {} }: IProps) => {
         flexWrap: "wrap",
       }}
     >
-      {time.length === 0 ? (
+      {Object.keys(time).length === 0 ? (
         <h3 style={{ margin: "10px", color: "black" }}>
           there are no availabilities on selected day{" "}
         </h3>
       ) : (
-        time.map(({ from, to }, i1) => {
+        Object.values(time).map(({ from, to }, i1) => {
           const time = dayjs(to, "hh:mm").diff(dayjs(from, "hh:mm"), "hours");
           return Array.apply(null, Array(time)).map((e, i) => {
             let AdditionalStyle = {};

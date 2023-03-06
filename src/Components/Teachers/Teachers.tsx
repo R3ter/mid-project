@@ -17,9 +17,9 @@ export default () => {
               <TeacherCard
                 id={e.id}
                 avatar={e.avatar}
-                rating={4.5}
+                rating={e.rate}
                 name={e.name}
-                country="Canada"
+                country={e.country}
                 description={e.description || ""}
               />
             );

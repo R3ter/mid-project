@@ -10,6 +10,7 @@ export const useFirebase = (
     | Promise<{
         id: string;
       }>
+    | any
 ) => {
   const [data, setData] = useState<any>();
   useEffect(() => {
