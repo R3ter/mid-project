@@ -4,11 +4,12 @@ import MainButton from "../../Components/MainButton/MainButton";
 import Select from "../../Components/Select/Select";
 import TimePicker from "../../Components/TimePicker/TimePicker";
 import SendIcon from "@mui/icons-material/Send";
-import { useQuery } from "react-query";
+import { useFirebase } from "./../../Hooks/useFirebase";
 import dayjs from "dayjs";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
+import { getTeacherInfo } from "../../firebase/getTeachers";
 
 export default () => {
   const params = useParams();
@@ -20,15 +21,12 @@ export default () => {
     comment: "",
     type: "",
   });
-  const fetchTeacher = async () => {
-    const res = await fetch(
-      "https://63f74ea0833c7c9c60810d71.mockapi.io/Teachers/" + params.id
-    );
-    return res.json();
-  };
+
   const [showError, setShowError] = useState(false);
   const [day, setDay] = useState(dayjs(new Date()).day());
-  const { isLoading, data } = useQuery("teachersCalender", fetchTeacher);
+
+  const { data, isLoading } = useFirebase(getTeacherInfo(params?.id || ""));
+
   return (
     <div style={{ margin: "20px" }}>
       <div>

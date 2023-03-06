@@ -1,16 +1,11 @@
 import { CircularProgress } from "@mui/material";
-import { useQuery } from "react-query";
+import { getTeachers } from "../../firebase/getTeachers";
+import { useFirebase } from "../../Hooks/useFirebase";
 import TeacherCard from "../TeacherCard/TeacherCard";
 import "./style.scss";
 export default () => {
-  const fetchTeachers = async () => {
-    const res = await fetch(
-      "https://63f74ea0833c7c9c60810d71.mockapi.io/Teachers"
-    );
-    return res.json();
-  };
-  const { isLoading, data } = useQuery("teachers", fetchTeachers);
-  console.log(data);
+  const { data, isLoading } = useFirebase(getTeachers());
+
   return (
     <div className="TeachersPage">
       <p>AVAILABLE TUTORS</p>
@@ -18,7 +13,6 @@ export default () => {
         {isLoading && <CircularProgress color="success" />}
         {data &&
           data.map((e: any) => {
-            console.log(e);
             return (
               <TeacherCard
                 id={e.id}
