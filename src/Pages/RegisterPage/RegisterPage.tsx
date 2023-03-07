@@ -6,12 +6,11 @@ import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MainButton from "../../Components/MainButton/MainButton";
 import { Link } from "react-router-dom";
 import Copyright from "../../Components/Copyright/Copyright";
-import SystemMessage from "../../Components/SystemMessage/SystemMessage";
+import { useRef } from "react";
 
 const theme = createTheme();
 
@@ -22,6 +21,7 @@ export default () => {
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      name: data.get("name"),
     });
   };
 
@@ -56,7 +56,7 @@ export default () => {
               alignItems: "center",
             }}
           >
-            <p style={{ fontSize: "40px" }}>Sign in</p>
+            <p style={{ fontSize: "40px" }}>Sign Up</p>
             <p style={{ fontSize: "20px", color: "gray" }}>
               Book lessons with qualified teachers online in various subjects
               with convenient communication tools.
@@ -84,7 +84,6 @@ export default () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -105,12 +104,8 @@ export default () => {
                 type="password"
                 id="repassword"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Link to={"#"} style={{ marginTop: "100px" }}>
-                <MainButton type="Secondary" text="Register" />
+                <MainButton type="Default" text="Register" />
               </Link>
               <Link to="/login" style={{ marginTop: "100px" }}>
                 already have an account sign in?

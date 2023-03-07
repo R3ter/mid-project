@@ -30,7 +30,7 @@ export default () => {
 
   useEffect(() => {
     if (!isLogged()) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, []);
   return (

@@ -24,7 +24,9 @@ interface IProps {
     | undefined;
 }
 export default ({ user }: any) => {
-  const userPars: IProps = { user: JSON.parse(user) };
+  const userPars: IProps | undefined = user
+    ? { user: JSON.parse(user) }
+    : undefined;
   console.log(user);
 
   const handleClose = () => {
@@ -100,7 +102,7 @@ export default ({ user }: any) => {
                   horizontal: "left",
                 }}
               >
-                {userPars.user?.isTeacher && (
+                {userPars?.user?.isTeacher && (
                   <MenuItem
                     onClick={() => {
                       navigate("/teacherProfile");

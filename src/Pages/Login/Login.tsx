@@ -44,14 +44,6 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SystemMessage
-        text="Email and password cant be empty"
-        setMessRef={errorMessFn}
-      />
-      <SystemMessage
-        text="Email and password is incorrect"
-        setMessRef={errorIncorrect}
-      />
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
