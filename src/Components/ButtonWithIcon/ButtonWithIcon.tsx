@@ -1,32 +1,57 @@
-import { Badge, Button, IconButton } from "@mui/material";
+import { Badge, Button, CircularProgress, IconButton } from "@mui/material";
 interface IProps {
   text: string;
   Icon: React.ComponentType;
   onClick?(args?: any): void;
+  style?: React.CSSProperties;
+  loading?: boolean;
+  spinnerColor?:
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "info"
+    | "success"
+    | "warning";
 }
-export default ({ text, Icon, onClick = () => {} }: IProps) => {
+export default ({
+  text,
+  Icon,
+  spinnerColor = "success",
+  onClick = () => {},
+  style = {},
+  loading = false,
+}: IProps) => {
   if (text == "") {
     return (
-      <IconButton onClick={(e) => onClick(e)} size="large" color="inherit">
+      <IconButton
+        style={{ ...style }}
+        onClick={(e) => onClick(e)}
+        size="large"
+        color="inherit"
+        disabled={loading}
+      >
         <Badge badgeContent={0} color="error">
-          <Icon />
+          {!loading ? <Icon /> : <CircularProgress color={spinnerColor} />}
         </Badge>
       </IconButton>
     );
   }
   return (
     <Button
-      style={{ color: "white", border: "none" }}
+      onClick={(e) => onClick(e)}
+      style={{ color: "white", border: "none", ...style }}
       variant="outlined"
+      disabled={loading}
       endIcon={
-        <IconButton onClick={(e) => onClick(e)} size="large" color="inherit">
+        <IconButton size="large" color="inherit">
           <Badge badgeContent={0} color="error">
-            <Icon />
+            {!loading ? <Icon /> : <CircularProgress color={spinnerColor} />}
           </Badge>
         </IconButton>
       }
     >
-      {text}
+      {!loading && text}
     </Button>
   );
 };

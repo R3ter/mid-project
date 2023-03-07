@@ -19,18 +19,23 @@ interface IProps {
     | {
         email: string;
         id: string;
+        isTeacher: boolean;
       }
     | undefined;
 }
-export default ({ user }: IProps) => {
+export default ({ user }: any) => {
+  const userPars: IProps = { user: JSON.parse(user) };
+  console.log(user);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [logged, setLogged] = useState(!!user);
+  const [logged, setLogged] = useState(!!userPars);
+
   useEffect(() => {
-    setLogged(!!user);
-  }, [user]);
+    setLogged(!!userPars);
+  }, [userPars]);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   return (
@@ -50,21 +55,21 @@ export default ({ user }: IProps) => {
           </div>
           <Box sx={{ flexGrow: 1 }} />
           {!logged ? (
-            <div
+            <Button
+              variant="outlined"
+              color="success"
+              style={{
+                width: "100px",
+                backgroundColor: "white",
+              }}
               onClick={() => {
                 navigate("/login");
               }}
-              style={{
-                cursor: "pointer",
-                borderRadius: "10px",
-                padding: "15px",
-                backgroundColor: "blue",
-              }}
             >
               Login
-            </div>
+            </Button>
           ) : (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ display: { md: "flex" } }}>
               <ButtonWithIcon
                 onClick={() => {
                   navigate("/messages");
@@ -95,13 +100,23 @@ export default ({ user }: IProps) => {
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                {userPars.user?.isTeacher && (
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/teacherProfile");
+                      handleClose();
+                    }}
+                  >
+                    Profile
+                  </MenuItem>
+                )}
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem
                   onClick={() => {
                     logout();
                     setLogged(false);
                     handleClose();
+                    navigate(0);
                   }}
                 >
                   Logout
@@ -109,16 +124,6 @@ export default ({ user }: IProps) => {
               </Menu>
             </Box>
           )}
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
         </Toolbar>
       </AppBar>
     </Box>

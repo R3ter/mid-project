@@ -9,11 +9,20 @@ import MessagesPage from "./Pages/MessagesPage/MessagesPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
+import BeTeacherPage from "./Pages/BeTeacherPage/BeTeacherPage";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
     children: [
+      {
+        path: "/teacherProfile",
+        element: <BeTeacherPage />,
+      },
+      {
+        path: "/BeTeacherPage",
+        element: <BeTeacherPage />,
+      },
       {
         path: "/calendar",
         element: <CalendarPage />,

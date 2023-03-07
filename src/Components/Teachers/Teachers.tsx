@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { getTeachers } from "../../firebase/getTeachers";
+import { getTeachers } from "../../firebase/Teachers";
 import { useFirebase } from "../../Hooks/useFirebase";
 import TeacherCard from "../TeacherCard/TeacherCard";
 import "./style.scss";

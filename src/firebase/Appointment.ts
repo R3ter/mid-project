@@ -1,3 +1,4 @@
+import { joinPaths } from "@remix-run/router";
 import {
   addDoc,
   collection,
@@ -39,7 +40,7 @@ export const addAppointment = async ({
     rejected: false,
     rejectionReason: "",
     studentId: `/Users/${studentId}`,
-    teacherID: `/Users/${teacherID}`,
+    teacherID: `/Teachers/${teacherID}`,
     time: {
       from: time.from,
       to: time.to,
@@ -58,9 +59,14 @@ export const getAppointments = async (userId: string, date: string) => {
       where("date", "==", date)
     )
   ).then((querySnapshot) => {
-    const newData = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-    }));
+    const newData = querySnapshot.docs.map((doc) => {
+      query(
+        collection(db, "Appoitments"),
+        where("studentId", "==", "/Users/" + userId),
+        where("date", "==", date)
+      );
+      return { ...doc.data() };
+    });
     if (!newData) return null;
     return newData as any;
   });

@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
-import { getTeacherInfo } from "../../firebase/getTeachers";
+import { getTeacherInfo } from "../../firebase/Teachers";
 import AddAppointment from "../../functions/AddAppointment";
 
 export default () => {
