@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
 import { getTeacherInfo } from "../../firebase/getTeachers";
+import AddAppointment from "../../functions/AddAppointment";
 
 export default () => {
   const params = useParams();
@@ -22,18 +23,18 @@ export default () => {
     type: "",
   });
 
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState({ show: false, text: "" });
   const [day, setDay] = useState(dayjs(new Date()).day());
-
+  const [loadingPost, setLoadingPost] = useState(false);
   const { data, isLoading } = useFirebase(getTeacherInfo(params?.id || ""));
 
   return (
     <div style={{ margin: "20px" }}>
       <div>
         <DatePicker
+          disablePast={true}
           onChange={(e: dayjs.Dayjs) => {
             setDay(e.day());
-            console.log(e);
             form.current.date = e.format("DD-MM-YYYY").toString();
           }}
         />
@@ -54,7 +55,7 @@ export default () => {
         }}
       >
         <TextField
-          error={showError}
+          error={showError.show}
           style={{ maxWidth: "500px", marginBottom: "50px" }}
           label="Comment"
           multiline
@@ -66,33 +67,50 @@ export default () => {
           variant="standard"
         />
         <Select
-          error={showError}
+          error={showError.show}
           onSelect={(e) => {
             form.current.type = e;
           }}
         />
       </div>
       <MainButton
-        onclick={() => {
+        loading={loadingPost}
+        onclick={async () => {
+          setLoadingPost(true);
           if (
             form.current.comment &&
             form.current.date &&
             form.current.time &&
             form.current.type
           ) {
+            if (
+              await AddAppointment({
+                date: form.current.date,
+                description: form.current.comment,
+                teacherID: params.id || "",
+                time: (() => {
+                  const [from, to] = form.current.time.split("-");
+                  return { from, to };
+                })(),
+                typeOfMeeting: form.current.type,
+              })
+            ) {
+              navigate("/calendar");
+            }
+            setShowError({
+              show: true,
+              text: "something went wrong try again later!!",
+            });
           } else {
-            setShowError(true);
-            mass.current(true);
+            setShowError({ show: true, text: "all fields are required" });
           }
+          setLoadingPost(false);
         }}
         text="Send"
         type="Default"
         Icon={SendIcon}
       />
-      <SystemMessage
-        text="please fill all of the information"
-        setMessRef={mass}
-      />
+      <SystemMessage open={showError.show} text={showError.text} />
       <MainButton
         onclick={() => {
           navigate("/tutors");

@@ -1,23 +1,22 @@
 import { Snackbar } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface IProps {
-  setMessRef: any;
   text: string;
+  open: boolean;
 }
-export default ({ setMessRef, text }: IProps) => {
-  const [state, setState] = useState(false);
-  const time = useRef<any>();
-  setMessRef.current = (bool: boolean) => {
-    setState(bool);
-    if (time.current) {
-      clearTimeout(time.current);
-    }
-    time.current = setTimeout(() => {
+export default (props: IProps) => {
+  const [state, setState] = useState(props.open);
+
+  useEffect(() => {
+    setState(props.open);
+    const timer = setTimeout(() => {
       setState(false);
-    }, 2000);
-  };
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [props]);
+
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref
@@ -29,7 +28,7 @@ export default ({ setMessRef, text }: IProps) => {
       anchorOrigin={{ horizontal: "right", vertical: "top" }}
       open={state}
     >
-      <Alert severity="error">{text}</Alert>
+      <Alert severity="error">{props.text}</Alert>
     </Snackbar>
   );
 };

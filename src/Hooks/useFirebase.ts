@@ -13,10 +13,15 @@ export const useFirebase = (
     | any
 ) => {
   const [data, setData] = useState<any>();
+  const [re, setRe] = useState(false);
+  const refresh = () => {
+    setRe(!re);
+  };
   useEffect(() => {
+    setData(null);
     fetch.then((e: any) => {
       setData(e);
     });
-  }, []);
-  return { data, isLoading: !data };
+  }, [re]);
+  return { data, isLoading: !data, refresh };
 };

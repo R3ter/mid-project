@@ -16,9 +16,6 @@
   display: flex;
   justify-content: center;
   max-width: 600px;
-  :nth-child(1) {
-    margin-left: 20px;
-  }
 }
 .MainButtonSecondary {
   max-width: 600px;
@@ -34,7 +31,4 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-  :nth-child(1) {
-    margin-left: 20px;
-  }
 }

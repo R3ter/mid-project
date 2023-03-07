@@ -11,26 +11,35 @@ import MainButton from "../../Components/MainButton/MainButton";
 import { Link, useNavigate } from "react-router-dom";
 import Copyright from "../../Components/Copyright/Copyright";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
-import { login } from "../../functions/Login";
+import { isLogged, login } from "../../functions/Login";
+import { useState } from "react";
 
 const theme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
+  React.useEffect(() => {
+    if (isLogged()) {
+      navigate("/", { replace: true });
+    }
+  }, []);
+  const [loading, setLoading] = useState(false);
   const errorMessFn = React.useRef((bool: boolean) => {});
   const errorIncorrect = React.useRef((bool: boolean) => {});
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     if (!data.get("email") || !data.get("password")) {
       errorMessFn.current(true);
     } else {
-      if (login(data.get("email"), data.get("password"))) {
-        navigate("/");
+      if (await login(data.get("email"), data.get("password"))) {
+        navigate("/", { replace: true });
       } else {
         errorMessFn.current(true);
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -107,7 +116,7 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <MainButton text="Login" />
+              <MainButton loading={loading} text="Login" />
 
               <Link to="/register" style={{ marginTop: "100px" }}>
                 <MainButton type="Secondary" text="Register" />

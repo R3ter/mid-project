@@ -8,6 +8,7 @@ import BookPage from "./Pages/BookPage/BookPage";
 import MessagesPage from "./Pages/MessagesPage/MessagesPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/calendar",
-        element: <HomePage />,
+        element: <CalendarPage />,
       },
       {
         path: "/Messages",

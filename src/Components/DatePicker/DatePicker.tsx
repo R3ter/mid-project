@@ -7,22 +7,27 @@ import { useState } from "react";
 
 interface IProps {
   onChange(e: any): void;
+  disablePast?: boolean;
 }
-export default function CustomToolbarFormat({ onChange }: IProps) {
+export default function CustomToolbarFormat({
+  onChange,
+  disablePast = true,
+}: IProps) {
   const [state, setState] = useState(dayjs(new Date()));
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <StaticDatePicker
-          onChange={(e) => {
+          onChange={(e: any) => {
             onChange(e);
             setState(e);
           }}
           value={state}
           displayStaticWrapperAs="desktop"
-          disablePast
+          disablePast={disablePast}
           sx={{
-            backgroundColor: "#aed1ff",
+            borderColor: "white",
+            backgroundColor: "gray",
             margin: "auto",
             maxWidth: "500px",
             marginTop: "100px",
