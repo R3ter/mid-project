@@ -11,7 +11,7 @@ import MainButton from "../../Components/MainButton/MainButton";
 import { Link, useNavigate } from "react-router-dom";
 import Copyright from "../../Components/Copyright/Copyright";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
-import { isLogged, login } from "../../functions/Login";
+import { isLogged, login } from "../../functions/Account";
 import { useState } from "react";
 
 const theme = createTheme();
@@ -23,20 +23,19 @@ export default function SignInSide() {
       navigate("/", { replace: true });
     }
   }, []);
+  const [error, setError] = useState({ show: false, massage: "" });
   const [loading, setLoading] = useState(false);
-  const errorMessFn = React.useRef((bool: boolean) => {});
-  const errorIncorrect = React.useRef((bool: boolean) => {});
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     const data = new FormData(event.currentTarget);
     if (!data.get("email") || !data.get("password")) {
-      errorMessFn.current(true);
+      setError({ show: true, massage: "fields are required" });
     } else {
       if (await login(data.get("email"), data.get("password"))) {
         navigate("/", { replace: true });
       } else {
-        errorMessFn.current(true);
+        setError({ show: true, massage: "Email or password does not match" });
       }
     }
     setLoading(false);
@@ -45,6 +44,7 @@ export default function SignInSide() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
+        <SystemMessage open={error.show} text={error.massage} />
         <CssBaseline />
         <Grid
           item
@@ -80,7 +80,7 @@ export default function SignInSide() {
             </p>
             <Box
               component="form"
-              noValidate
+              // noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >

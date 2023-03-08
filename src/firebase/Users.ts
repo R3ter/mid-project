@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -23,7 +24,25 @@ export const CheckUser = async ({
   ).then((querySnapshot) => {
     const newData = querySnapshot?.docs[0]?.data();
     if (!newData) return null;
-    console.log(newData);
+    newData;
     return { ...newData, id: querySnapshot?.docs[0].id } as any;
   });
+};
+export const createUser = async ({
+  email,
+  name,
+  password,
+}: {
+  email: string;
+  password: string;
+  name: string;
+}) => {
+  email, name, password;
+  return await addDoc(collection(db, "Users"), {
+    email,
+    name,
+    password,
+  })
+    .then(async (e) => ({ id: e.id, email, fullName: name, isTeacher: false }))
+    .catch(() => null);
 };

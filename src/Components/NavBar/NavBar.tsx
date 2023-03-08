@@ -1,18 +1,16 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import Logo from "../Logo/Logo";
 import ButtonWithIcon from "../ButtonWithIcon/ButtonWithIcon";
 import { Button, Menu, MenuItem } from "@mui/material";
 import NavItem from "./NavItem/NavItem";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { logout } from "../../functions/Login";
+import React from "react";
+import { logout } from "../../functions/Account";
 
 interface IProps {
   user:
@@ -27,17 +25,12 @@ export default ({ user }: any) => {
   const userPars: IProps | undefined = user
     ? { user: JSON.parse(user) }
     : undefined;
-  console.log(user);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [logged, setLogged] = useState(!!userPars);
 
-  useEffect(() => {
-    setLogged(!!userPars);
-  }, [userPars]);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   return (
@@ -56,7 +49,7 @@ export default ({ user }: any) => {
             <NavItem link="calendar">Calendar</NavItem>
           </div>
           <Box sx={{ flexGrow: 1 }} />
-          {!logged ? (
+          {!user ? (
             <Button
               variant="outlined"
               color="success"
@@ -79,7 +72,15 @@ export default ({ user }: any) => {
                 text=""
                 Icon={MailIcon}
               />
-              <ButtonWithIcon text="" Icon={NotificationsIcon} />
+              {userPars?.user?.isTeacher && (
+                <ButtonWithIcon
+                  onClick={() => {
+                    navigate("/Requests");
+                  }}
+                  text=""
+                  Icon={NotificationsIcon}
+                />
+              )}
               <ButtonWithIcon
                 onClick={(e) => {
                   setAnchorEl(e.target);
@@ -112,11 +113,9 @@ export default ({ user }: any) => {
                     Profile
                   </MenuItem>
                 )}
-                <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem
                   onClick={() => {
                     logout();
-                    setLogged(false);
                     handleClose();
                     navigate(0);
                   }}

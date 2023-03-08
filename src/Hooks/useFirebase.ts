@@ -18,12 +18,12 @@ export const useFirebase = (
     setRe(!re);
   };
   useEffect(() => {
-    setData({ data: null, loading: false });
+    setData({ data: null, loading: true });
     fetch.then((e: any) => {
-      setData({ data: e, loading: false });
+      setData({ data: e || null, loading: false });
     });
   }, [re]);
-  return { data: data.data, isLoading: data.data === null, refresh };
+  return { data: data.data, isLoading: data.loading, refresh };
 };
 
 export const useMutationFirebase = (

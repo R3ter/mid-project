@@ -1,33 +1,63 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MainButton from "../../Components/MainButton/MainButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Copyright from "../../Components/Copyright/Copyright";
-import { useRef } from "react";
+import SystemMessage from "../../Components/SystemMessage/SystemMessage";
+import { addAccount, isLogged, login } from "../../functions/Account";
+import { useState } from "react";
 
 const theme = createTheme();
 
-export default () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function SignInSide() {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (isLogged()) {
+      navigate("/", { replace: true });
+    }
+  }, []);
+  const [error, setError] = useState({ show: false, massage: "" });
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      name: data.get("name"),
-    });
+
+    if ((data.get("password")?.length || 1) < 5) {
+      setError({ show: true, massage: "password is too short" });
+    } else if (data.get("password") !== data.get("repassword")) {
+      setError({ show: true, massage: "password does not match" });
+    } else {
+      if (
+        data.get("email") &&
+        data.get("password") &&
+        data.get("name") &&
+        (await addAccount({
+          email: data.get("email")?.toString(),
+          password: data.get("password"),
+          name: data.get("name"),
+        }))
+      ) {
+        navigate("/", { replace: true });
+      } else {
+        setError({
+          show: true,
+          massage: "something went wrong please try again later",
+        });
+      }
+    }
+    setLoading(false);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
+        <SystemMessage open={error.show} text={error.massage} />
         <CssBaseline />
         <Grid
           item
@@ -56,14 +86,14 @@ export default () => {
               alignItems: "center",
             }}
           >
-            <p style={{ fontSize: "40px" }}>Sign Up</p>
+            <p style={{ fontSize: "40px" }}>Sign in</p>
             <p style={{ fontSize: "20px", color: "gray" }}>
               Book lessons with qualified teachers online in various subjects
               with convenient communication tools.
             </p>
             <Box
               component="form"
-              noValidate
+              // noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
@@ -95,20 +125,21 @@ export default () => {
                 id="password"
                 autoComplete="current-password"
               />
+
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 name="repassword"
-                label="confirm password"
+                label="Re Password"
                 type="password"
                 id="repassword"
               />
-              <Link to={"#"} style={{ marginTop: "100px" }}>
-                <MainButton type="Default" text="Register" />
-              </Link>
+
+              <MainButton loading={loading} text="Register" />
+
               <Link to="/login" style={{ marginTop: "100px" }}>
-                already have an account sign in?
+                <p>Already have an account?</p>
               </Link>
               <Copyright sx={{ mt: 5 }} />
             </Box>
@@ -117,4 +148,4 @@ export default () => {
       </Grid>
     </ThemeProvider>
   );
-};
+}

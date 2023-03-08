@@ -10,11 +10,16 @@ import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import BeTeacherPage from "./Pages/BeTeacherPage/BeTeacherPage";
+import RequestsPage from "./Pages/RequestPage/RequestsPage";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
     children: [
+      {
+        path: "/Requests",
+        element: <RequestsPage />,
+      },
       {
         path: "/teacherProfile",
         element: <BeTeacherPage />,

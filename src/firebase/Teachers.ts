@@ -6,7 +6,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { updateAccount } from "../functions/Login";
+import { updateAccount } from "../functions/Account";
 import { db } from "./Init";
 
 interface teacherInfo {
@@ -29,10 +29,13 @@ export const getTeachers = async () => {
   });
 };
 export const getTeacherInfo = async (id: string) => {
-  return await getDoc(doc(db, "Teachers", id)).then((querySnapshot) => {
-    const newData = querySnapshot.data();
-    return newData;
-  });
+  if (!id) return undefined;
+  return await getDoc(doc(db, "Teachers", id))
+    .then((querySnapshot) => {
+      const newData = querySnapshot?.data();
+      return newData;
+    })
+    .catch(() => undefined);
 };
 export const addTeacher = async ({
   availableDays,
@@ -54,6 +57,7 @@ export const addTeacher = async ({
     .then(async (e) => {
       return await updateDoc(doc(db, "Users", userId), {
         teacherId: e.id,
+        isTeacher: true,
       })
         .then(() => {
           updateAccount({ teacherId: e.id, isTeacher: true });

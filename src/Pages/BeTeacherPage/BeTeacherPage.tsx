@@ -7,15 +7,15 @@ import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import { addTeacher, getTeacherInfo } from "../../firebase/Teachers";
 import { countries } from "../../functions/Countries";
 import SaveIcon from "@mui/icons-material/Save";
-import { isLogged, userInfo } from "../../functions/Login";
+import { isLogged, userInfo } from "../../functions/Account";
 import { useFirebase, useMutationFirebase } from "../../Hooks/useFirebase";
 import ButtonWithIcon from "../../Components/ButtonWithIcon/ButtonWithIcon";
 import dayjs from "dayjs";
+import SystemMessage from "../../Components/SystemMessage/SystemMessage";
 
 export default () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useFirebase(getTeacherInfo(userInfo().teacherId));
-  console.log(data);
+
   const {
     data: mutationData,
     mutate,
@@ -33,12 +33,24 @@ export default () => {
       navigate("/login", { replace: true });
     }
   }, []);
+
+  const { data, isLoading } = useFirebase(getTeacherInfo(userInfo().teacherId));
+
+  const [error, setError] = useState({ show: false, massage: "" });
+
+  useEffect(() => {
+    if (mutationData) {
+      navigate(0);
+    }
+  }, [mutationData]);
   return (
     <>
       <h1 style={{ color: "black", marginTop: 100, textAlign: "center" }}>
         Teacher information
       </h1>
       <div style={{ marginTop: 50, display: "flex", justifyContent: "center" }}>
+        <SystemMessage open={error.show} text={error.massage} />
+
         {isLoading && <LoadingSpinner />}
         <div style={{ display: "flex", flexDirection: "column" }}>
           {!isLoading && (
@@ -98,6 +110,28 @@ export default () => {
                 form.current.name.current.childNodes[1].childNodes[0].value;
 
               const availability = form.current.availability;
+
+              if (!boi || !country || !name) {
+                setError({
+                  show: true,
+                  massage: "please fill all of the fields",
+                });
+                return;
+              }
+              if (name.length < 5) {
+                setError({
+                  show: true,
+                  massage: "please fill your full name",
+                });
+                return;
+              }
+              if (boi.length < 10) {
+                setError({
+                  show: true,
+                  massage: "Bio is too short!",
+                });
+                return;
+              }
 
               mutate({
                 availableDays: availability.current.map((e: any) =>

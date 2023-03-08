@@ -1,5 +1,5 @@
 import { addAppointment, AppointmentType } from "../firebase/Appointment";
-import { isLogged, userInfo } from "./Login";
+import { isLogged, userInfo } from "./Account";
 
 export default async (data: AppointmentType) => {
   if (isLogged()) {

@@ -7,14 +7,15 @@ import SendIcon from "@mui/icons-material/Send";
 import { useFirebase } from "./../../Hooks/useFirebase";
 import dayjs from "dayjs";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
 import { getTeacherInfo } from "../../firebase/Teachers";
 import AddAppointment from "../../functions/AddAppointment";
+import { isLogged } from "../../functions/Account";
+import { getRequestedAppointments } from "../../firebase/Appointment";
 
 export default () => {
   const params = useParams();
-  const mass = useRef((args: boolean) => {});
   const navigate = useNavigate();
   const form = useRef({
     date: dayjs(new Date()).format("DD-MM-YYYY").toString(),
@@ -22,12 +23,18 @@ export default () => {
     comment: "",
     type: "",
   });
-
+  useEffect(() => {
+    if (!isLogged()) navigate("/login", { replace: true });
+  }, []);
   const [showError, setShowError] = useState({ show: false, text: "" });
   const [day, setDay] = useState(dayjs(new Date()).day());
+  const [refresh, setRefresh] = useState(true);
   const [loadingPost, setLoadingPost] = useState(false);
   const { data, isLoading } = useFirebase(getTeacherInfo(params?.id || ""));
-
+  const { data: requestData, isLoading: requestLoading } = useFirebase(
+    getRequestedAppointments(params?.id, undefined, true)
+  );
+  requestData;
   return (
     <div style={{ margin: "20px" }}>
       <div>
@@ -35,14 +42,17 @@ export default () => {
           disablePast={true}
           onChange={(e: dayjs.Dayjs) => {
             setDay(e.day());
+            setRefresh(!refresh);
             form.current.date = e.format("DD-MM-YYYY").toString();
           }}
         />
         {isLoading && <CircularProgress color="success" />}
         <TimePicker
+          date={form.current.date}
           onSelect={(selected) => {
             form.current.time = selected;
           }}
+          reservedTimes={requestData}
           time={
             data ? (data.availableDays[day] ? data.availableDays[day] : []) : []
           }

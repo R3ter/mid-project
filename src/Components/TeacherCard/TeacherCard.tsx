@@ -19,9 +19,9 @@ interface IProps {
   avatar: string;
 }
 export default ({ country, description, name, rating, avatar, id }: IProps) => {
-  console.log(avatar);
+  avatar;
   return (
-    <Card sx={{ maxWidth: 345, margin: 5 }}>
+    <Card sx={{ minWidth: "400px", maxWidth: 345, margin: 5 }}>
       <CardHeader
         title={name}
         subheader={country}

@@ -5,6 +5,7 @@ import {
   doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "./Init";
@@ -60,14 +61,60 @@ export const getAppointments = async (userId: string, date: string) => {
     )
   ).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
-      query(
-        collection(db, "Appoitments"),
-        where("studentId", "==", "/Users/" + userId),
-        where("date", "==", date)
-      );
       return { ...doc.data() };
     });
     if (!newData) return null;
     return newData as any;
   });
+};
+export const getRequestedAppointments = async (
+  userId: string,
+  date?: string | null,
+  approved?: boolean
+) => {
+  if (approved) {
+    return await getDocs(
+      query(
+        collection(db, "Appoitments"),
+        where("teacherID", "==", "/Teachers/" + userId),
+        where("approved", "==", true)
+      )
+    ).then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      });
+      if (!newData) return null;
+      return newData as any;
+    });
+  }
+  return await getDocs(
+    query(
+      collection(db, "Appoitments"),
+      where("teacherID", "==", "/Teachers/" + userId)
+    )
+  ).then((querySnapshot) => {
+    const newData = querySnapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id };
+    });
+    if (!newData) return null;
+    return newData as any;
+  });
+};
+
+export const updateAppointmentState = async ({
+  id,
+  state,
+  rejectionReason,
+}: {
+  state: boolean;
+  id: string;
+  rejectionReason?: string;
+}) => {
+  return await updateDoc(doc(db, "Appoitments", id), {
+    rejected: !state,
+    approved: state,
+    rejectionReason: !state ? rejectionReason : "",
+  })
+    .then(() => true)
+    .catch(() => false);
 };

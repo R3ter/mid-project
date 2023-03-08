@@ -1,6 +1,6 @@
 import DatePicker from "../../Components/DatePicker/DatePicker";
 import { getAppointments } from "../../firebase/Appointment";
-import { isLogged, userInfo } from "./../../functions/Login";
+import { isLogged, userInfo } from "../../functions/Account";
 import { useFirebase } from "../../Hooks/useFirebase";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export default () => {
   const { data, isLoading, refresh } = useFirebase(
     getAppointments(userInfo().id, date)
   );
-  console.log(data);
+  data;
   return (
     <div>
       {isLoading && <LoadingSpinner />}

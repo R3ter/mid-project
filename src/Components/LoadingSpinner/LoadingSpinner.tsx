@@ -3,6 +3,7 @@ import { Box, CircularProgress } from "@mui/material";
 export default () => {
   return (
     <Box
+      component={"span"}
       sx={{
         position: "fixed",
         left: "0",

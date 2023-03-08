@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { isLogged, userInfo } from "../../functions/Login";
+import { isLogged, userInfo } from "../../functions/Account";
 import "./style.scss";
 
 interface IProps {}
