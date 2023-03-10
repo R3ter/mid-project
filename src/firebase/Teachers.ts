@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { updateAccount } from "../functions/Account";
@@ -17,6 +18,7 @@ interface teacherInfo {
   name: string;
   rate: number;
   userId: string;
+  teacherId: string;
 }
 
 export const getTeachers = async () => {
@@ -44,7 +46,29 @@ export const addTeacher = async ({
   description,
   name,
   userId,
+  teacherId,
 }: teacherInfo) => {
+  if (teacherId) {
+    return await setDoc(
+      await getDoc(doc(db, "Teachers", teacherId)).then((e) => e.ref),
+      {
+        userId,
+        availableDays: Object.assign({}, availableDays),
+        avatar,
+        country,
+        description,
+        name,
+        rate: 0,
+      },
+      { merge: true }
+    )
+      .then(async (e) => {
+        updateAccount({ teacherId: teacherId, isTeacher: true });
+        return true;
+      })
+      .catch(() => false);
+  }
+
   return await addDoc(collection(db, "Teachers"), {
     userId,
     availableDays: Object.assign({}, availableDays),

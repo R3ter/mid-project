@@ -134,6 +134,7 @@ export default () => {
               }
 
               mutate({
+                teacherId: userInfo().teacherId,
                 availableDays: availability.current.map((e: any) =>
                   e.map((e: any) => {
                     return {
@@ -142,7 +143,8 @@ export default () => {
                     };
                   })
                 ),
-                avatar: "",
+                avatar:
+                  "https://e7.pngegg.com/pngimages/349/288/png-clipart-teacher-education-student-course-school-avatar-child-face-thumbnail.png",
                 name: name,
                 country: country,
                 userId: userInfo().id,

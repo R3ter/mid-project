@@ -12,8 +12,8 @@ export default ({}: IProps) => {
   } | null;
   return (
     <div>
-      <NavBar user={userInfo || undefined} />
-      <br></br>
+      {/* <NavBar user={userInfo || undefined} />
+      <br></br> */}
       <Outlet />
     </div>
   );

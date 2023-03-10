@@ -11,10 +11,12 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import BeTeacherPage from "./Pages/BeTeacherPage/BeTeacherPage";
 import RequestsPage from "./Pages/RequestPage/RequestsPage";
+import Error404Page from "./Pages/Error404Page/Error404Page";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
+    errorElement: <Error404Page />,
     children: [
       {
         path: "/Requests",
