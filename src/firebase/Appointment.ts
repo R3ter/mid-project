@@ -56,7 +56,7 @@ export const getAppointments = async (userId: string, date: string) => {
   return await getDocs(
     query(
       collection(db, "Appoitments"),
-      where("studentId", "==", "/Users/" + userId),
+      where("studentId", "==", userId),
       where("date", "==", date)
     )
   ).then((querySnapshot) => {
@@ -77,7 +77,7 @@ export const getRequestedAppointments = async (
     return await getDocs(
       query(
         collection(db, "Appoitments"),
-        where("teacherID", "==", "/Teachers/" + userId),
+        where("teacherID", "==", userId),
         where("approved", "==", true)
       )
     ).then((querySnapshot) => {
@@ -89,10 +89,7 @@ export const getRequestedAppointments = async (
     });
   }
   return await getDocs(
-    query(
-      collection(db, "Appoitments"),
-      where("teacherID", "==", "/Teachers/" + userId)
-    )
+    query(collection(db, "Appoitments"), where("teacherID", "==", userId))
   ).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
       return { ...doc.data(), id: doc.id };

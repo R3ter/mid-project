@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import {
   Parallax,
   ParallaxBanner,
@@ -41,9 +42,11 @@ export default () => {
           <h1>BookMyClass:</h1>
           <h2>Your One-Stop Destination for Booking Classes</h2>
           {!userInfo().isTeacher && (
-            <Button color="secondary" variant="contained" sx={{ width: 250 }}>
-              Become a Teacher
-            </Button>
+            <Link to={"/BeTeacherPage"}>
+              <Button color="secondary" variant="contained" sx={{ width: 250 }}>
+                Become a Teacher
+              </Button>
+            </Link>
           )}
         </div>
       </ParallaxBanner>

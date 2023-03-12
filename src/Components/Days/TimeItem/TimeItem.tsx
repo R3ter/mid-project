@@ -33,36 +33,7 @@ export default ({ times, index, refe }: any) => {
                     <DesktopTimePicker
                       format="HH:00"
                       onChange={(e1) => {
-                        if (!e1) e1 = dayjs("00:00", "HH:mm");
-                        if (
-                          dayjs(e1, "HH:mm").isAfter(
-                            dayjs(time[index][i].to, "HH:mm")
-                          )
-                        ) {
-                          e1 = dayjs(time[index][i].to, "HH:mm");
-                        }
-                        let a = false;
-                        time[index].forEach(
-                          (
-                            element: { from: string; to: string },
-                            ind: number
-                          ) => {
-                            if (ind == i) return;
-                            if (
-                              dayjs(e1, "HH:mm").isAfter(
-                                dayjs(element.from, "HH:mm"),
-                                "hour"
-                              )
-                            ) {
-                              time[index][i].from = dayjs(
-                                element.from,
-                                "HH:mm"
-                              );
-                              a = true;
-                            }
-                          }
-                        );
-                        if (!a) time[index][i].from = dayjs(e1, "HH:mm");
+                        time[index][i].from = dayjs(e1, "HH:mm");
                         setTimes([...time]);
                       }}
                       value={v1}
@@ -72,33 +43,7 @@ export default ({ times, index, refe }: any) => {
                       format="HH:00"
                       value={v2}
                       onChange={(e1) => {
-                        if (!e1) e1 = dayjs("00:00", "HH:mm");
-                        if (
-                          dayjs(e1, "HH:mm").isBefore(
-                            dayjs(time[index][i].from, "HH:mm")
-                          )
-                        ) {
-                          e1 = dayjs(time[index][i].from, "HH:mm");
-                        }
-                        let a = false;
-                        time[index].forEach(
-                          (
-                            element: { from: string; to: string },
-                            ind: number
-                          ) => {
-                            if (ind == i) return;
-                            if (
-                              dayjs(e1, "HH:mm").isAfter(
-                                dayjs(element.from, "HH:mm"),
-                                "hour"
-                              )
-                            ) {
-                              time[index][i].to = dayjs(element.from, "HH:mm");
-                              a = true;
-                            }
-                          }
-                        );
-                        if (!a) time[index][i].to = dayjs(e1, "HH:mm");
+                        time[index][i].to = dayjs(e1, "HH:mm");
                         setTimes([...time]);
                       }}
                     />

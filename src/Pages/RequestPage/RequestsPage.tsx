@@ -44,6 +44,9 @@ export default () => {
   return (
     <div>
       {isLoading && loadingMutation && <LoadingSpinner />}
+      <h1 style={{ color: "black", marginTop: "10px", textAlign: "center" }}>
+        Appointment Requests
+      </h1>
       <div className="appointments">
         {data &&
           (data.length == 0 ? (

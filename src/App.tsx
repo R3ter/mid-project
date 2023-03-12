@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     errorElement: <Error404Page />,
     children: [
       {
-        path: "/TeacherProfile",
+        path: "/TeacherProfile/:id",
         element: <Profile />,
       },
       {

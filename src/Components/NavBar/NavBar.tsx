@@ -53,8 +53,8 @@ export default ({ user }: any) => {
               width: "40%",
             }}
           >
-            <NavItem link="tutors">Teachers</NavItem>
-            <NavItem link="calendar">Calendar</NavItem>
+            <NavItem link="/tutors">Teachers</NavItem>
+            <NavItem link="/calendar">Calendar</NavItem>
           </div>
           <Box sx={{ flexGrow: 1 }} />
           {!user ? (

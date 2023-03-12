@@ -50,6 +50,11 @@ export default () => {
       </h1>
       <div style={{ marginTop: 50, display: "flex", justifyContent: "center" }}>
         <SystemMessage open={error.show} text={error.massage} />
+        <SystemMessage
+          open={!error.show && !!mutationData}
+          type={"success"}
+          text="Updated"
+        />
 
         {isLoading && <LoadingSpinner />}
         <div style={{ display: "flex", flexDirection: "column" }}>

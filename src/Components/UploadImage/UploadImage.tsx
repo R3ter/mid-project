@@ -15,8 +15,24 @@ export default () => {
       setImage({ image: "/1.png", loading: false });
     });
   return (
-    <div>
-      <Button variant="contained" component="label">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignSelf: "center",
+      }}
+    >
+      {image.loading ? (
+        <LoadingSpinner />
+      ) : (
+        <img src={image.image} width={300} height={300} />
+      )}
+      <Button
+        sx={{ maxWidth: "300px", marginTop: 5 }}
+        variant="contained"
+        component="label"
+      >
         Upload
         <input
           onChange={(event) => {
@@ -37,11 +53,6 @@ export default () => {
           type="file"
         />
       </Button>
-      {image.loading ? (
-        <LoadingSpinner />
-      ) : (
-        <img src={image.image} width={300} height={300} />
-      )}
     </div>
   );
 };

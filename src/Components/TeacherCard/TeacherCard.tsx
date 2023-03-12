@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Rating } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getImage } from "../../functions/Images";
 import { useState } from "react";
 
@@ -34,11 +34,22 @@ export default ({
     setImage(e);
   });
   const [image, setImage] = useState(avatar);
+  const navigate = useNavigate();
   return (
-    <Card sx={{ minWidth: "300px", maxWidth: 305, margin: 5 }}>
+    <Card
+      sx={{
+        cursor: "pointer",
+        minWidth: "300px",
+        maxWidth: 305,
+        margin: 5,
+      }}
+    >
       <CardHeader
         title={name}
         subheader={country}
+        onClick={() => {
+          navigate("/TeacherProfile/" + id);
+        }}
         action={
           <>
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -46,6 +57,7 @@ export default ({
               <p
                 style={{
                   alignSelf: "center",
+                  cursor: "pointer",
                   margin: "auto",
                   marginLeft: "5px",
                 }}
@@ -58,11 +70,14 @@ export default ({
         }
       />
       <CardMedia
+        onClick={() => {
+          navigate("/TeacherProfile/" + id);
+        }}
         component="img"
         height="150"
         image={image}
-        alt="Paella dish"
         sx={{
+          cursor: "pointer",
           marginBottom: "1rem",
           objectFit: "contain",
         }}

@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 interface IProps {
   text: string;
   open: boolean;
+  type?: "success" | "error";
 }
 export default (props: IProps) => {
   const [state, setState] = useState(props.open);
@@ -28,7 +29,7 @@ export default (props: IProps) => {
       anchorOrigin={{ horizontal: "right", vertical: "top" }}
       open={state}
     >
-      <Alert severity="error">{props.text}</Alert>
+      <Alert severity={props.type || "error"}>{props.text}</Alert>
     </Snackbar>
   );
 };

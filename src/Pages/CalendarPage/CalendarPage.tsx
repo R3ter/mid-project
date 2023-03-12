@@ -29,6 +29,9 @@ export default () => {
   return (
     <div>
       {isLoading && <LoadingSpinner />}
+      <h1 style={{ marginTop: "100px", color: "black", textAlign: "center" }}>
+        My Calender
+      </h1>
       <DatePicker
         disablePast={false}
         onChange={(e) => {
@@ -56,6 +59,7 @@ export default () => {
                 id,
                 reviewed,
                 teacherID,
+                didNotShow,
               }: any) => {
                 return (
                   <div className="card">
