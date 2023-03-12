@@ -38,9 +38,9 @@ export default function SignInSide() {
         data.get("password") &&
         data.get("name") &&
         (await addAccount({
-          email: data.get("email")?.toString(),
-          password: data.get("password"),
-          name: data.get("name"),
+          email: data.get("email")?.toString() || "",
+          password: data.get("password")?.toString() || "",
+          name: data.get("name")?.toString() || "",
         }))
       ) {
         navigate("/", { replace: true });

@@ -1,12 +1,4 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./Init";
 
 export const CheckUser = async ({
@@ -37,7 +29,6 @@ export const createUser = async ({
   password: string;
   name: string;
 }) => {
-  email, name, password;
   return await addDoc(collection(db, "Users"), {
     email,
     name,

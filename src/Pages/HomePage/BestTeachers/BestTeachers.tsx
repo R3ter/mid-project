@@ -19,6 +19,7 @@ export default () => {
           data.map((e: ITeacherInfo) => {
             return (
               <TeacherCard
+                usersRated={e.rate}
                 avatar={e.avatar}
                 country={e.country}
                 description={e.description}

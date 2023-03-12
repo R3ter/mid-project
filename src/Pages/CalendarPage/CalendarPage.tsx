@@ -95,7 +95,7 @@ export default () => {
                             .isAfter(
                               dayjs(`${time.to} ${date}`, "hh:mm DD-MM-YYYY")
                             )
-                        ? "ReJected"
+                        ? "Rejected"
                         : "Pending"}
                     </h2>
                     {rejected && (

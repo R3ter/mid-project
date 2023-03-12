@@ -135,14 +135,15 @@ export default () => {
 
               mutate({
                 teacherId: userInfo().teacherId,
-                availableDays: availability.current.map((e: any) =>
-                  e.map((e: any) => {
+                availableDays: availability.current.map((e: any) => {
+                  
+                  return e.map((e: any) => {
                     return {
                       to: dayjs(e.to, "HH:mm").format("HH:mm"),
                       from: dayjs(e.from, "HH:mm").format("HH:mm"),
                     };
-                  })
-                ),
+                  });
+                }),
                 avatar:
                   "https://e7.pngegg.com/pngimages/349/288/png-clipart-teacher-education-student-course-school-avatar-child-face-thumbnail.png",
                 name: name,
