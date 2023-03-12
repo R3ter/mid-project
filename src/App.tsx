@@ -12,12 +12,17 @@ import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import BeTeacherPage from "./Pages/BeTeacherPage/BeTeacherPage";
 import RequestsPage from "./Pages/RequestPage/RequestsPage";
 import Error404Page from "./Pages/Error404Page/Error404Page";
+import Profile from "./Pages/TeacherProfile/TeacherProfile";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
     errorElement: <Error404Page />,
     children: [
+      {
+        path: "/TeacherProfile",
+        element: <Profile />,
+      },
       {
         path: "/Requests",
         element: <RequestsPage />,
