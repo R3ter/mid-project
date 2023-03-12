@@ -37,11 +37,11 @@ export default ({ time, onSelect = () => {}, reservedTimes, date }: IProps) => {
           return Array.apply(null, Array(time)).map((e, i) => {
             let AdditionalStyle = {};
             const newfrom = from;
-            newfrom;
             let disa = false;
             if (
+              reservedTimes &&
               reservedTimes.find(
-                (f) => f.date == date && f.time.from == newfrom
+                (f: any) => f.date == date && f.time.from == newfrom
               )
             ) {
               disa = true;
@@ -50,6 +50,13 @@ export default ({ time, onSelect = () => {}, reservedTimes, date }: IProps) => {
               .add(1, "hours")
               .format("hh:mm")
               .toString();
+
+            if (
+              date == dayjs(new Date()).format("DD-MM-YYYY") &&
+              dayjs().format("hh:mm") > newfrom
+            ) {
+              disa = true;
+            }
             from = newto;
             if (selectedIndex == i + "-" + i1) {
               AdditionalStyle = {

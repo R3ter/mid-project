@@ -17,23 +17,38 @@ interface IProps {
   rating: number;
   id: string;
   avatar: string;
+  usersRated: number;
 }
-export default ({ country, description, name, rating, avatar, id }: IProps) => {
-  avatar;
+export default ({
+  country,
+  description,
+  name,
+  rating,
+  avatar,
+  id,
+  usersRated,
+}: IProps) => {
   return (
-    <Card sx={{ minWidth: "400px", maxWidth: 345, margin: 5 }}>
+    <Card sx={{ minWidth: "300px", maxWidth: 305, margin: 5 }}>
       <CardHeader
         title={name}
         subheader={country}
         action={
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Rating readOnly defaultValue={rating} precision={0.5} />
-            <p
-              style={{ alignSelf: "center", margin: "auto", marginLeft: "5px" }}
-            >
-              {rating}
-            </p>
-          </div>
+          <>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Rating readOnly defaultValue={rating} precision={0.5} />
+              <p
+                style={{
+                  alignSelf: "center",
+                  margin: "auto",
+                  marginLeft: "5px",
+                }}
+              >
+                {rating}
+              </p>
+            </div>
+            <p style={{ textAlign: "right" }}>{usersRated || 0} users</p>
+          </>
         }
       />
       <CardMedia

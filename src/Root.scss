@@ -1,7 +1,13 @@
 $mainColor: rgba(21, 124, 124, 0.527);
 $FontColor: white;
 $BackgroundColor: rgb(255, 255, 255);
+@font-face {
+  font-family: myFont;
+  src: url(/public/font.ttf);
+}
+
 body {
+  font-family: myFont;
   margin: 0;
   color: $FontColor;
   background-color: $BackgroundColor;

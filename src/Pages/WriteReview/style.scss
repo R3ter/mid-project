@@ -1,0 +1,30 @@
+.WriteReview {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.541);
+  color: black;
+  & > div {
+    padding: 100px;
+    padding-top: 0px;
+    background-color: white;
+    border-radius: 20px;
+    flex-direction: column;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+    * {
+      align-self: center;
+    }
+  }
+  textarea {
+    width: 100%;
+  }
+}

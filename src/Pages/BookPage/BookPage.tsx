@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
 import { getTeacherInfo } from "../../firebase/Teachers";
 import AddAppointment from "../../functions/AddAppointment";
-import { isLogged } from "../../functions/Account";
+import { isLogged, userInfo } from "../../functions/Account";
 import { getRequestedAppointments } from "../../firebase/Appointment";
 
 export default () => {
@@ -36,7 +36,7 @@ export default () => {
   );
   requestData;
   return (
-    <div style={{ margin: "20px" }}>
+    <div style={{ margin: "20px", minHeight: "100vh" }}>
       <div>
         <DatePicker
           disablePast={true}
@@ -97,7 +97,9 @@ export default () => {
               await AddAppointment({
                 date: form.current.date,
                 description: form.current.comment,
+                name: userInfo().name,
                 teacherID: params.id || "",
+
                 time: (() => {
                   const [from, to] = form.current.time.split("-");
                   return { from, to };

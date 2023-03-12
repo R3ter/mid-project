@@ -1,4 +1,3 @@
-import { joinPaths } from "@remix-run/router";
 import {
   addDoc,
   collection,
@@ -13,6 +12,7 @@ export interface AppointmentType {
   approved?: boolean;
   date: string;
   description: string;
+  name: string;
   location?: string;
   rejected?: boolean;
   rejectionReason?: string;
@@ -61,18 +61,19 @@ export const getAppointments = async (userId: string, date: string) => {
     )
   ).then((querySnapshot) => {
     const newData = querySnapshot.docs.map((doc) => {
-      return { ...doc.data() };
+      return { ...doc.data(), id: doc.id };
     });
     if (!newData) return null;
     return newData as any;
   });
 };
 export const getRequestedAppointments = async (
-  userId: string,
+  userId: string | undefined,
   date?: string | null,
   approved?: boolean
 ) => {
   if (approved) {
+    if (!userId) return null;
     return await getDocs(
       query(
         collection(db, "Appoitments"),
@@ -114,6 +115,13 @@ export const updateAppointmentState = async ({
     rejected: !state,
     approved: state,
     rejectionReason: !state ? rejectionReason : "",
+  })
+    .then(() => true)
+    .catch(() => false);
+};
+export const updateAppointReview = async ({ id }: { id: string }) => {
+  return await updateDoc(doc(db, "Appoitments", id), {
+    reviewed: true,
   })
     .then(() => true)
     .catch(() => false);

@@ -10,7 +10,7 @@ import {
 import { updateAccount } from "../functions/Account";
 import { db } from "./Init";
 
-interface teacherInfo {
+export interface ITeacherInfo {
   availableDays: [];
   avatar: string;
   country: string;
@@ -19,6 +19,7 @@ interface teacherInfo {
   rate: number;
   userId: string;
   teacherId: string;
+  id?: string;
 }
 
 export const getTeachers = async () => {
@@ -47,7 +48,7 @@ export const addTeacher = async ({
   name,
   userId,
   teacherId,
-}: teacherInfo) => {
+}: ITeacherInfo) => {
   if (teacherId) {
     return await setDoc(
       await getDoc(doc(db, "Teachers", teacherId)).then((e) => e.ref),
@@ -90,4 +91,19 @@ export const addTeacher = async ({
         .catch(() => false);
     })
     .catch(() => false);
+};
+export const addTeacherRate = async (teacherId: string, starsNum: number) => {
+  const teacher = await getDoc(doc(db, "Teachers", teacherId));
+  return await setDoc(
+    teacher.ref,
+    {
+      rateCount: teacher?.data()?.rateCount
+        ? teacher?.data()?.rateCount + 1
+        : 1,
+      rateSum: teacher?.data()?.rateSum
+        ? teacher?.data()?.rateSum + starsNum
+        : starsNum,
+    },
+    { merge: true }
+  );
 };

@@ -17,7 +17,10 @@ export default () => {
               <TeacherCard
                 id={e.id}
                 avatar={e.avatar}
-                rating={e.rate}
+                rating={
+                  e.rateCount && e.rateSum ? (e.rateSum / e.rateCount) * 5 : 0
+                }
+                usersRated={e.rateCount}
                 name={e.name}
                 country={e.country}
                 description={e.description || ""}

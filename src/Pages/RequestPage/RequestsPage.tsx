@@ -13,6 +13,7 @@ import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import "./style.scss";
 import { Button, Slide, TextField } from "@mui/material";
+import dayjs from "dayjs";
 
 const NoData = () => {
   return (
@@ -25,7 +26,7 @@ const NoData = () => {
 export default () => {
   const navigate = useNavigate();
   const [showText, setShowText] = useState(false);
-  const containerRef = useRef<HTMLDivElement | undefined>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const rejectionText = useRef("");
   const { data, isLoading, refresh } = useFirebase(
     getRequestedAppointments(userInfo().teacherId, null)
@@ -93,7 +94,11 @@ export default () => {
                         "Rejected"
                       ) : approved ? (
                         "Accepted"
-                      ) : (
+                      ) : dayjs()
+                          .add(1, "hour")
+                          .isBefore(
+                            dayjs(`${time.to} ${date}`, "hh:mm DD-MM-YYYY")
+                          ) ? (
                         <>
                           <div ref={containerRef}>
                             {!showText && (
@@ -174,6 +179,8 @@ export default () => {
                             </div>
                           </Slide>
                         </>
+                      ) : (
+                        "Time is over"
                       )}
                     </h2>
 

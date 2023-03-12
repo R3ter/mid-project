@@ -34,8 +34,16 @@ export default ({ user }: any) => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1, position: "fixed", width: "100%", zIndex: 999 }}>
-      <AppBar position="sticky" style={{ backgroundColor: "#7087f3" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "sticky",
+        top: 0,
+        width: "100%",
+        zIndex: 999,
+      }}
+    >
+      <AppBar position="sticky" sx={{ backgroundColor: "#7087f3" }}>
         <Toolbar>
           <Logo />
           <div

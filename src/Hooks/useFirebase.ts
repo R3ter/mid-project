@@ -41,9 +41,13 @@ export const useMutationFirebase = (
   const [data, setData] = useState({ data: null, start: false });
   let mutate = async (args: any) => {
     setData({ data: data.data, start: true });
-    fetch(args).then((e: any) => {
+    await fetch(args).then((e: any) => {
       setData({ data: e, start: false });
     });
   };
-  return { data: data.data, isLoading: !data.data && data.start, mutate };
+  return {
+    data: data.data,
+    isLoading: !data.data && data.start,
+    mutate,
+  };
 };
