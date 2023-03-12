@@ -14,13 +14,14 @@ export default ({}: IProps) => {
   }, [pathname]);
 
   const isMatch = useMatch("/home");
+  const isMatch1 = useMatch("/");
   const userInfo = localStorage.getItem("user") as {
     email: string;
     id: string;
   } | null;
   return (
     <div>
-      {!isMatch && <NavBar user={userInfo || undefined} />}
+      {!isMatch && !isMatch1 && <NavBar user={userInfo || undefined} />}
       <br></br>
       <Outlet />
       <Footer />

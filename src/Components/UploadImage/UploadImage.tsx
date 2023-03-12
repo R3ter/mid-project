@@ -1,0 +1,47 @@
+import { Button } from "@mui/material";
+import { useState } from "react";
+import { userInfo } from "../../functions/Account";
+import { getImage, uploadFile } from "../../functions/Images";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
+export default () => {
+  const getUserImage = getImage(userInfo().teacherId);
+  const [image, setImage] = useState({ image: "/1.png", loading: true });
+  getUserImage
+    .then((e) => {
+      setImage({ image: e, loading: false });
+    })
+    .catch(() => {
+      setImage({ image: "/1.png", loading: false });
+    });
+  return (
+    <div>
+      <Button variant="contained" component="label">
+        Upload
+        <input
+          onChange={(event) => {
+            setImage({ image: "", loading: true });
+            if (event?.target && event?.target.files) {
+              uploadFile(event.target.files[0], userInfo().teacherId, () => {
+                if (event?.target && event?.target.files) {
+                  setImage({
+                    image: URL.createObjectURL(event.target.files[0]),
+                    loading: false,
+                  });
+                }
+              });
+            }
+          }}
+          hidden
+          accept="image/*"
+          type="file"
+        />
+      </Button>
+      {image.loading ? (
+        <LoadingSpinner />
+      ) : (
+        <img src={image.image} width={300} height={300} />
+      )}
+    </div>
+  );
+};

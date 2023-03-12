@@ -43,7 +43,7 @@ export default ({ user }: any) => {
         zIndex: 999,
       }}
     >
-      <AppBar position="sticky" sx={{ backgroundColor: "#7087f3" }}>
+      <AppBar position="sticky" sx={{ backgroundColor: "#31ACB6" }}>
         <Toolbar>
           <Logo />
           <div

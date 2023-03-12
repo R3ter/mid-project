@@ -12,6 +12,7 @@ import { useFirebase, useMutationFirebase } from "../../Hooks/useFirebase";
 import ButtonWithIcon from "../../Components/ButtonWithIcon/ButtonWithIcon";
 import dayjs from "dayjs";
 import SystemMessage from "../../Components/SystemMessage/SystemMessage";
+import UploadImage from "../../Components/UploadImage/UploadImage";
 
 export default () => {
   const navigate = useNavigate();
@@ -40,7 +41,6 @@ export default () => {
 
   useEffect(() => {
     if (mutationData) {
-      navigate(0);
     }
   }, [mutationData]);
   return (
@@ -72,6 +72,7 @@ export default () => {
                   <TextField {...params} label="Lives in" />
                 )}
               />
+              <UploadImage />
               <TextField
                 InputLabelProps={
                   {
@@ -114,7 +115,7 @@ export default () => {
               if (!boi || !country || !name) {
                 setError({
                   show: true,
-                  massage: "please fill all of the fields",
+                  massage: "please fill all fields",
                 });
                 return;
               }
@@ -136,7 +137,6 @@ export default () => {
               mutate({
                 teacherId: userInfo().teacherId,
                 availableDays: availability.current.map((e: any) => {
-                  
                   return e.map((e: any) => {
                     return {
                       to: dayjs(e.to, "HH:mm").format("HH:mm"),

@@ -9,6 +9,8 @@ import Typography from "@mui/material/Typography";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Rating } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getImage } from "../../functions/Images";
+import { useState } from "react";
 
 interface IProps {
   country: string;
@@ -28,6 +30,10 @@ export default ({
   id,
   usersRated,
 }: IProps) => {
+  getImage(id).then((e) => {
+    setImage(e);
+  });
+  const [image, setImage] = useState(avatar);
   return (
     <Card sx={{ minWidth: "300px", maxWidth: 305, margin: 5 }}>
       <CardHeader
@@ -54,7 +60,7 @@ export default ({
       <CardMedia
         component="img"
         height="150"
-        image={avatar}
+        image={image}
         alt="Paella dish"
         sx={{
           marginBottom: "1rem",
